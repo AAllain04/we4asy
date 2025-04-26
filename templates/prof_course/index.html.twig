@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin') }}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ courseTitle }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="h2">{{ courseTitle }}</h1>
+
+    <div class="text-end mb-3">
+        <a href="{{path('post_ue')}}" class="btn btn-primary">Créer un nouveau post</a>
+    </div>
+
+    <h3>Messages et fichiers publiés</h3>
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <strong>{{ post.title }}</strong>
+                <p>{{ post.content|nl2br }}</p>
+
+                {% if post.type == 'partage de fichier' and post.file_name %}
+                    <p><a href="{{ post.file_path }}" target="_blank">Télécharger : {{ post.file_name }}</a></p>
+                {% endif %}
+
+                <div class="mt-2">
+                    <a href="#" class="btn btn-secondary btn-sm">Modifier</a>
+                    <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ post.id }})">Supprimer</button>
+                </div>
+            </li>
+        {% else %}
+            <li class="list-group-item">Aucun message ou fichier partagé.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+    function confirmDelete(postId) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette publication ? Cette action est irréversible.")) {
+            window.location.href = '/delete_post/' + postId;
+        }
+    }
+</script>
+{% endblock %}

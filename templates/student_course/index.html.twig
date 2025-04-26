@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('moodle') }}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ courseTitle }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="h2">{{ courseTitle }}</h1>
+
+    <h3 class="mt-4">Messages et fichiers publiés</h3>
+
+    <ul class="list-group mt-3">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <div class="d-flex align-items-center mb-2">
+                    {% if post.type == 'message' %}
+                        <img src="{{ asset('assets/message.png') }}" alt="Message" class="me-2" width="24">
+                    {% elseif post.type == 'partage de fichier' %}
+                        <img src="{{ asset('assets/téléchargement.png') }}" alt="Fichier" class="me-2" width="24">
+                    {% endif %}
+                    <strong>{{ post.title }}</strong>
+                </div>
+                <p>{{ post.content|nl2br }}</p>
+                {% if post.type == 'partage de fichier' and post.file_name %}
+                    <p><a href="{{ post.file_path }}" target="_blank">Télécharger : {{ post.file_name }}</a></p>
+                {% endif %}
+            </li>
+        {% else %}
+            <li class="list-group-item">Aucun message ou fichier partagé par les professeurs.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
