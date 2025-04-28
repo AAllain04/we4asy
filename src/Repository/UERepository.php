@@ -16,28 +16,19 @@ class UERepository extends ServiceEntityRepository
         parent::__construct($registry, UE::class);
     }
 
-    //    /**
-    //     * @return UE[] Returns an array of UE objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    // Récupérer toutes les unités d'enseignement par code
+    public function findByCode($code): ?UE
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.code = :code')
+            ->setParameter('code', $code)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-    //    public function findOneBySomeField($value): ?UE
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    // Récupérer toutes les unités d'enseignement
+    public function findAllUes(): array
+    {
+        return $this->findBy([], ['id' => 'ASC']); // Tri par ID ascendant
+    }
 }

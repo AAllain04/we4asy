@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Lorsque l'utilisateur clique sur "Supprimer" dans le modal
   document.getElementById('confirmDelete').addEventListener('click', function () {
-    const url = deleteType === 'user' ? `delete_user.php?id=${deleteId}` : `delete_ue.php?id=${deleteId}`;
+    const url = deleteType === 'user' ? `/admin/delete/user/${deleteId}` : `/admin/delete/ue/${deleteId}`;
 
     fetch(url, {
       method: 'DELETE', // Suppression via une requête DELETE

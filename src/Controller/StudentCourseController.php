@@ -26,7 +26,7 @@ class StudentCourseController extends AbstractController
 
         // Requête SQL pour récupérer les posts des profs
         $posts = $connection->fetchAllAssociative(
-            "SELECT * FROM posts 
+            "SELECT * FROM post 
              WHERE author_role = 'prof' 
              AND status = 'published' 
              AND (type = 'message' OR type = 'partage de fichier') 
